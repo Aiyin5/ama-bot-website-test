@@ -36,7 +36,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: robinfc/ama-bot-website
+          images: aiyin/ama-test
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
@@ -46,11 +46,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: SSH deploy to production server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.TENCENT_CLOUD_IP }}
-          username: ${{ secrets.TENCENT_CLOUD_NAME }}
-          password: ${{ secrets.TENCENT_CLOUD_PASSWORD }}
-          script: cd ~ && cd ../home/ubuntu && sh deploy.sh
